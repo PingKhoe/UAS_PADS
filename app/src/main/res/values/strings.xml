@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">UAS_PADS</string>
+    <string-array name="salespersons">
+        <item>Salesperson 1</item>
+        <item>Salesperson 2</item>
+        <item>Salesperson 3</item>
+    </string-array>
+</resources>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/orders">
+
+    <fragment
+        android:id="@+id/orders"
+        android:name="id.ac.ibda.uas_pads.Orders"
+        android:label="fragment_orders"
+        tools:layout="@layout/fragment_orders" >
+        <action
+            android:id="@+id/action_orders_to_customersList"
+            app:destination="@id/customersList" />
+        <action
+            android:id="@+id/action_orders_to_inventory"
+            app:destination="@id/inventory" />
+    </fragment>
+    <fragment
+        android:id="@+id/inventory"
+        android:name="id.ac.ibda.uas_pads.Inventory"
+        android:label="fragment_inventory"
+        tools:layout="@layout/fragment_inventory" >
+        <action
+            android:id="@+id/action_inventory_to_orders"
+            app:destination="@id/orders" />
+        <action
+            android:id="@+id/action_inventory_to_customersList"
+            app:destination="@id/customersList" />
+    </fragment>
+    <fragment
+        android:id="@+id/customersList"
+        android:name="id.ac.ibda.uas_pads.CustomersList"
+        android:label="fragment_customers_list"
+        tools:layout="@layout/fragment_customers_list" >
+        <action
+            android:id="@+id/action_customersList_to_orders"
+            app:destination="@id/orders" />
+        <action
+            android:id="@+id/action_customersList_to_inventory"
+            app:destination="@id/inventory" />
+    </fragment>
+</navigation>
