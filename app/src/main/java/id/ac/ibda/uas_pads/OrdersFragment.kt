@@ -18,18 +18,24 @@ class OrdersFragment : Fragment() {
 
         // Example: Set click listeners for buttons
         view.findViewById<Button>(R.id.orderBtn).setOnClickListener {
-            // Handle the button click
-            // Add your code here
+            // Do nothing
         }
 
         view.findViewById<Button>(R.id.customerBtn).setOnClickListener {
-            // Handle the button click
-            // Add your code here
+            val customerFragment = CustomerFragment()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, customerFragment)
+                .addToBackStack(null)
+                .commit()
         }
 
         view.findViewById<Button>(R.id.inventoryBtn).setOnClickListener {
-            // Handle the button click
-            // Add your code here
+            // Replace the current fragment with the InventoryFragment
+            val inventoryFragment = InventoryFragment()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, inventoryFragment)
+                .addToBackStack(null)
+                .commit()
         }
 
         view.findViewById<Button>(R.id.salesperson1).setOnClickListener {
