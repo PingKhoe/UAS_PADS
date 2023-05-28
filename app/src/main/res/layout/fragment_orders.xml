@@ -110,7 +110,6 @@
             android:hint="Product ID"
             android:inputType="text" />
 
-
     </LinearLayout>
 
     <Button

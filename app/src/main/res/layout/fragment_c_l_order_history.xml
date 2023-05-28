@@ -46,4 +46,10 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <TextView
+        android:id="@+id/inventoryTextView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Nama Customer - ID Customer" />
+
 </LinearLayout>

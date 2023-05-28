@@ -1,6 +1,5 @@
 package id.ac.ibda.uas_pads
 
-import android.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import id.ac.ibda.uas_pads.databinding.FragmentOrdersBinding
 
 
@@ -27,6 +27,14 @@ class Orders : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentOrdersBinding.inflate(layoutInflater)
+
+        binding.customerBtn.setOnClickListener {
+            findNavController().navigate(R.id.customersList)
+        }
+
+        binding.inventoryBtn.setOnClickListener {
+            findNavController().navigate(R.id.inventory)
+        }
     }
 
     override fun onCreateView(
