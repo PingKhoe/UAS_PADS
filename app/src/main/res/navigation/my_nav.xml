@@ -40,5 +40,41 @@
         <action
             android:id="@+id/action_customersList_to_inventory"
             app:destination="@id/inventory" />
+        <action
+            android:id="@+id/action_customersList_to_CL_Customers"
+            app:destination="@id/CL_Customers" />
+    </fragment>
+    <fragment
+        android:id="@+id/CL_Customers"
+        android:name="id.ac.ibda.uas_pads.CL_Customers"
+        android:label="fragment_c_l_customers"
+        tools:layout="@layout/fragment_c_l_customers" >
+        <action
+            android:id="@+id/action_CL_Customers_to_CL_OrderHistory"
+            app:destination="@id/CL_OrderHistory" />
+        <action
+            android:id="@+id/action_CL_Customers_to_orders"
+            app:destination="@id/orders" />
+        <action
+            android:id="@+id/action_CL_Customers_to_customersList"
+            app:destination="@id/customersList" />
+        <action
+            android:id="@+id/action_CL_Customers_to_inventory"
+            app:destination="@id/inventory" />
+    </fragment>
+    <fragment
+        android:id="@+id/CL_OrderHistory"
+        android:name="id.ac.ibda.uas_pads.CL_OrderHistory"
+        android:label="fragment_c_l_order_history"
+        tools:layout="@layout/fragment_c_l_order_history" >
+        <action
+            android:id="@+id/action_CL_OrderHistory_to_orders"
+            app:destination="@id/orders" />
+        <action
+            android:id="@+id/action_CL_OrderHistory_to_customersList"
+            app:destination="@id/customersList" />
+        <action
+            android:id="@+id/action_CL_OrderHistory_to_inventory"
+            app:destination="@id/inventory" />
     </fragment>
 </navigation>
