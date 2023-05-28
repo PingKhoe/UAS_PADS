@@ -1,70 +1,75 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="20dp"
-    tools:ignore="UsingOnClickInXml"
-    tools:context=".CustomersList">
+    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp"
+        tools:ignore="UsingOnClickInXml"
+        tools:context=".CustomersList">
 
-        <Button
-            android:id="@+id/orderBtn"
-            android:layout_width="120dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:lines="2"
-            android:text="Order"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/orderBtn"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:lines="2"
+                android:text="Order"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/customerBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Customer \n List"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/inventoryBtn"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:lines="2"
+                android:text="Inventory"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
-            android:id="@+id/customerBtn"
+            android:id="@+id/salesperson1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Customer \n List"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginLeft="10dp"
+            android:text="Giovanna" />
 
         <Button
-            android:id="@+id/inventoryBtn"
-            android:layout_width="120dp"
+            android:id="@+id/salesperson2"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:lines="2"
-            android:text="Inventory"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginLeft="10dp"
+            android:text="Doppio" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/salesperson3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Narancia" />
 
-    <Button
-        android:id="@+id/salesperson1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:text="Salesperson 1" />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/salesperson2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:text="Salesperson 2" />
-
-    <Button
-        android:id="@+id/salesperson3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:text="Salesperson 3" />
-
-</LinearLayout>
+</FrameLayout>

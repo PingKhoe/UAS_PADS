@@ -3,80 +3,79 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import android.widget.Button
-import android.widget.TextView
 import id.ac.ibda.uas_pads.R
-import retrofit2.Response
-
+import id.ac.ibda.uas_pads.databinding.FragmentInventoryBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class InventoryFragment : Fragment() {
-    private lateinit var productsResponse: Response<List<Product>> // Assume you have the productsResponse available
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the fragment layout XML
-        return inflater.inflate(R.layout.fragment_inventory, container, false)
+    private var _binding: FragmentInventoryBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var apiService: ApiService
+    private var products: List<Product>? = null
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentInventoryBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Create Retrofit instance
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://127.0.0.1:5000") // Replace with your base URL
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        // Create ApiService instance
+        apiService = retrofit.create(ApiService::class.java)
+
         // Example: Set click listeners for buttons
-        view.findViewById<Button>(R.id.orderBtn).setOnClickListener {
-            // Replace the current fragment with the OrdersFragment
-            val ordersFragment = OrdersFragment()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, ordersFragment)
-                .addToBackStack(null)
-                .commit()
+        binding.orderBtn.setOnClickListener {
+            // Do nothing
         }
 
-        view.findViewById<Button>(R.id.customerBtn).setOnClickListener {
-            // Replace the current fragment with the CustomerFragment
+        binding.customerBtn.setOnClickListener {
             val customerFragment = CustomerFragment()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, customerFragment)
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.frameLayout, customerFragment)
                 .addToBackStack(null)
                 .commit()
         }
 
-        view.findViewById<Button>(R.id.inventoryBtn).setOnClickListener {
-            // Handle the button click
-            // Add your code here
-            // For example, display productsResponse in the TextView
-            val textView = view.findViewById<TextView>(R.id.inventoryTextView)
-            textView.text = formatProductsResponse(productsResponse)
+        binding.inventoryBtn.setOnClickListener {
+            // Do nothing since we're already on the inventory screen
         }
 
-        view.findViewById<Button>(R.id.salesperson1).setOnClickListener {
-            // Handle the button click
-            // Add your code here
-        }
+        // Fetch inventory data and update inventoryTextView
+        fetchInventoryData()
+    }
 
-        view.findViewById<Button>(R.id.salesperson2).setOnClickListener {
-            // Handle the button click
-            // Add your code here
-        }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
-        view.findViewById<Button>(R.id.salesperson3).setOnClickListener {
-            // Handle the button click
-            // Add your code here
+    private fun fetchInventoryData() {
+        GlobalScope.launch(Dispatchers.Main) {
+            try {
+                products = apiService.getProducts()
+                val inventoryText = products?.joinToString("\n") { it.product_name }
+                binding.inventoryTextView.text = inventoryText // Update inventoryTextView with the fetched inventory data
+                binding.inventoryTextView.visibility = View.VISIBLE // Set the visibility of inventoryTextView
+            } catch (e: Exception) {
+                e.printStackTrace()
+                showError("Failed to fetch inventory data")
+            }
         }
     }
 
-    private fun formatProductsResponse(productsResponse: Response<List<Product>>): String {
-        return if (productsResponse.isSuccessful) {
-            val products = productsResponse.body()
-            // Format the products data as a table string
-            val stringBuilder = StringBuilder()
-            products?.forEachIndexed { index, product ->
-                stringBuilder.append("Product ${index + 1}: ${product.product_name}\n")
-                stringBuilder.append("Product ID: ${product.product_id}\n")
-                stringBuilder.append("Category: ${product.product_category}\n")
-                stringBuilder.append("Quantity: ${product.product_quantity}\n\n")
-            }
-            stringBuilder.toString()
-        } else {
-            "Error occurred while fetching products"
-        }
+    private fun showError(errorMessage: String) {
+        // Handle the error case
     }
 }

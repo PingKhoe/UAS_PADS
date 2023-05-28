@@ -1,11 +1,9 @@
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.POST
 import retrofit2.http.Path
-import kotlinx.coroutines.runBlocking
+import retrofit2.http.Body
+import retrofit2.http.POST
 
 data class Customer(
     val customer_id: Int,
@@ -18,14 +16,13 @@ data class Order(
     val order_date: String,
     val order_status: String,
     val order_address: String,
-    val customer_id: Int,
-    val customer_name: String
+    val customer_id: String
 )
 
 data class Product(
+    val product_category: String,
     val product_id: Int,
     val product_name: String,
-    val product_category: String,
     val product_quantity: Int
 )
 
@@ -36,99 +33,60 @@ data class SalesPerson(
 
 interface ApiService {
     @GET("/customers")
-    suspend fun getCustomers(): Response<List<Customer>>
+    suspend fun getCustomers(): List<Customer>
 
     @GET("/orders")
-    suspend fun getOrders(): Response<List<Order>>
+    suspend fun getOrders(): List<Order>
 
     @GET("/sales_person")
-    suspend fun getSalesPersons(): Response<List<SalesPerson>>
+    suspend fun getSalesPersons(): List<SalesPerson>
 
     @GET("/customers/{sales_person_id}")
-    suspend fun getCustomersBySalesPerson(@Path("sales_person_id") salesPersonId: Int): Response<List<Customer>>
+    suspend fun getCustomersBySalesPerson(@Path("sales_person_id") salesPersonId: Int): List<Customer>
 
     @POST("/add_orders")
-    suspend fun addOrder(@Body orderData: Order): Response<Unit>
+    suspend fun addOrder(@Body orderData: Order)
 
     @GET("/orders/{customer_id}")
-    suspend fun getOrdersByCustomer(@Path("customer_id") customerId: Int): Response<List<Order>>
+    suspend fun getOrdersByCustomer(@Path("customer_id") customerId: Int): List<Order>
 
     @GET("/products")
-    suspend fun getProducts(): Response<List<Product>>
+    suspend fun getProducts(): List<Product>
 }
 
-fun main() {
-    runBlocking {
-        val retrofit = Retrofit.Builder()
-            .baseUrl("http://127.0.0.1:5000")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+class MyClass {
+    private val retrofit = Retrofit.Builder()
+        .baseUrl("http://127.0.0.1:5000")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
 
-        val apiService = retrofit.create(ApiService::class.java)
+    private val apiService = retrofit.create(ApiService::class.java)
 
-        // Get all customers
-        val customersResponse = apiService.getCustomers()
-        if (customersResponse.isSuccessful) {
-            val customers = customersResponse.body()
-            // Handle the list of customers
-        } else {
-            // Handle the error case
-        }
+    suspend fun addOrder(orderData: Order) {
+        apiService.addOrder(orderData)
+    }
 
-        // Get all orders
-        val ordersResponse = apiService.getOrders()
-        if (ordersResponse.isSuccessful) {
-            val orders = ordersResponse.body()
-            // Handle the list of orders
-        } else {
-            // Handle the error case
-        }
+    suspend fun getCustomers(): List<Customer> {
+        return apiService.getCustomers()
+    }
 
-        // Get all salespersons
-        val salesPersonsResponse = apiService.getSalesPersons()
-        if (salesPersonsResponse.isSuccessful) {
-            val salesPersons = salesPersonsResponse.body()
-            // Handle the list of salespersons
-        } else {
-            // Handle the error case
-        }
+    suspend fun getOrders(): List<Order> {
+        return apiService.getOrders()
+    }
 
-        // Get customers by salesperson ID
-        val salesPersonId = 1
-        val customersBySalesPersonResponse = apiService.getCustomersBySalesPerson(salesPersonId)
-        if (customersBySalesPersonResponse.isSuccessful) {
-            val customersBySalesPerson = customersBySalesPersonResponse.body()
-            // Handle the list of customers by salesperson
-        } else {
-            // Handle the error case
-        }
+    suspend fun getSalesPersons(): List<SalesPerson> {
+        return apiService.getSalesPersons()
+    }
 
-        // Add an order
-        val orderData = Order(order_date = "2023-05-27", order_status = "Sent", order_address = "Sample Address", customer_id = 1, customer_name = "John Doe")
-        val addOrderResponse = apiService.addOrder(orderData)
-        if (addOrderResponse.isSuccessful) {
-            // Order added successfully
-        } else {
-            // Handle the error case
-        }
+    suspend fun getCustomersBySalesPerson(salesPersonId: Int): List<Customer> {
+        return apiService.getCustomersBySalesPerson(salesPersonId)
+    }
 
-        // Get orders by customer ID
-        val customerId = 1
-        val ordersByCustomerResponse = apiService.getOrdersByCustomer(customerId)
-        if (ordersByCustomerResponse.isSuccessful) {
-            val ordersByCustomer = ordersByCustomerResponse.body()
-            // Handle the list of orders by customer
-        } else {
-            // Handle the error case
-        }
+    suspend fun getOrdersByCustomer(customerId: Int): List<Order> {
+        return apiService.getOrdersByCustomer(customerId)
+    }
 
-        // Get all products
-        val productsResponse = apiService.getProducts()
-        if (productsResponse.isSuccessful) {
-            val products = productsResponse.body()
-            // Handle the list of products
-        } else {
-            // Handle the error case
-        }
+    suspend fun getProducts(): List<Product> {
+        return apiService.getProducts()
     }
 }

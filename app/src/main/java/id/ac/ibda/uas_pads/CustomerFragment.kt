@@ -20,8 +20,8 @@ class CustomerFragment : Fragment() {
         view.findViewById<Button>(R.id.orderBtn).setOnClickListener {
             // Replace the current fragment with the OrdersFragment
             val ordersFragment = OrdersFragment()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, ordersFragment)
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(android.R.id.content, ordersFragment)
                 .addToBackStack(null)
                 .commit()
         }
@@ -33,8 +33,8 @@ class CustomerFragment : Fragment() {
         view.findViewById<Button>(R.id.inventoryBtn).setOnClickListener {
             // Replace the current fragment with the InventoryFragment
             val inventoryFragment = InventoryFragment()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, inventoryFragment)
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(android.R.id.content, inventoryFragment)
                 .addToBackStack(null)
                 .commit()
         }

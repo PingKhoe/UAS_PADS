@@ -42,7 +42,7 @@ class Orders : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val salespersons = arrayOf("Salesperson 1", "Salesperson 2", "Salesperson 3")
+        val salespersons = arrayOf("Giovanna", "Doppio", "Narancia")
         val salespersonSpinner: Spinner = binding.salespersonSpinner
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, salespersons)
         salespersonSpinner.adapter = adapter

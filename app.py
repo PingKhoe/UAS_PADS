@@ -113,8 +113,8 @@ def add_order():
 
     order_date = order_data.get('order_date')
     order_status = order_data.get('order_status')
-    order_address = order_data.get('order_address')
-    customer_id = order_data.get('customer_id')
+    order_address = order_data.get('order_address', '')
+    customer_id = order_data.get('customer_id', '')
 
     new_order = Orders(
         order_date=order_date,

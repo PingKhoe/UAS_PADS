@@ -1,56 +1,66 @@
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import android.widget.Button
-import id.ac.ibda.uas_pads.R
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import id.ac.ibda.uas_pads.databinding.FragmentOrdersBinding
 
 class OrdersFragment : Fragment() {
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the fragment layout XML
-        return inflater.inflate(R.layout.fragment_orders, container, false)
-    }
+    // ...
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Example: Set click listeners for buttons
-        view.findViewById<Button>(R.id.orderBtn).setOnClickListener {
-            // Do nothing
-        }
+        val binding = FragmentOrdersBinding.bind(view)
 
-        view.findViewById<Button>(R.id.customerBtn).setOnClickListener {
-            val customerFragment = CustomerFragment()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, customerFragment)
-                .addToBackStack(null)
-                .commit()
-        }
-
-        view.findViewById<Button>(R.id.inventoryBtn).setOnClickListener {
-            // Replace the current fragment with the InventoryFragment
-            val inventoryFragment = InventoryFragment()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, inventoryFragment)
-                .addToBackStack(null)
-                .commit()
-        }
-
-        view.findViewById<Button>(R.id.salesperson1).setOnClickListener {
-            // Handle the button click
-            // Add your code here
-        }
-
-        view.findViewById<Button>(R.id.salesperson2).setOnClickListener {
-            // Handle the button click
-            // Add your code here
-        }
-
-        view.findViewById<Button>(R.id.salesperson3).setOnClickListener {
-            // Handle the button click
-            // Add your code here
+        binding.submitBtn.setOnClickListener {
+            submitForm()
         }
     }
+
+    private fun submitForm() {
+        val binding = FragmentOrdersBinding.bind(requireView())
+
+        val customerID = binding.customerID.text.toString()
+        val orderDate = binding.orderDate
+        val year = orderDate.year
+        val month = orderDate.month
+        val day = orderDate.dayOfMonth
+        val customerAddress = binding.customerAddress.text.toString()
+        val salespersonId = binding.salespersonSpinner.selectedItemId.toInt()
+
+        val orderData = Order(
+            order_date = "$month-$day-$year",
+            order_status = "Sent",
+            order_address = customerAddress,
+            customer_id = customerID
+        )
+
+        GlobalScope.launch(Dispatchers.Main) {
+            val success = try {
+                addOrder(orderData)
+                true
+            } catch (e: Exception) {
+                false
+            }
+
+            if (success) {
+                showToast("Order created successfully")
+            } else {
+                showToast("Failed to create order")
+            }
+        }
+    }
+
+    private suspend fun addOrder(orderData: Order) {
+        val myClass = MyClass()
+        myClass.addOrder(orderData)
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
 }
