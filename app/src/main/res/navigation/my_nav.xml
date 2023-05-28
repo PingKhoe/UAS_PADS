@@ -9,7 +9,7 @@
         android:id="@+id/orders"
         android:name="id.ac.ibda.uas_pads.Orders"
         android:label="fragment_orders"
-        tools:layout="@layout/fragment_orders" >
+        tools:layout="@layout/fragment_orders">
         <action
             android:id="@+id/action_orders_to_customersList"
             app:destination="@id/customersList" />
@@ -21,7 +21,7 @@
         android:id="@+id/inventory"
         android:name="id.ac.ibda.uas_pads.Inventory"
         android:label="fragment_inventory"
-        tools:layout="@layout/fragment_inventory" >
+        tools:layout="@layout/fragment_inventory">
         <action
             android:id="@+id/action_inventory_to_orders"
             app:destination="@id/orders" />
@@ -33,7 +33,7 @@
         android:id="@+id/customersList"
         android:name="id.ac.ibda.uas_pads.CustomersList"
         android:label="fragment_customers_list"
-        tools:layout="@layout/fragment_customers_list" >
+        tools:layout="@layout/fragment_customers_list">
         <action
             android:id="@+id/action_customersList_to_orders"
             app:destination="@id/orders" />
@@ -42,13 +42,17 @@
             app:destination="@id/inventory" />
         <action
             android:id="@+id/action_customersList_to_CL_Customers"
-            app:destination="@id/CL_Customers" />
+            app:destination="@id/CL_Customers">
+            <argument
+                android:name="salesPersonId"
+                app:argType="integer" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/CL_Customers"
         android:name="id.ac.ibda.uas_pads.CL_Customers"
         android:label="fragment_c_l_customers"
-        tools:layout="@layout/fragment_c_l_customers" >
+        tools:layout="@layout/fragment_c_l_customers">
         <action
             android:id="@+id/action_CL_Customers_to_CL_OrderHistory"
             app:destination="@id/CL_OrderHistory" />
@@ -66,7 +70,7 @@
         android:id="@+id/CL_OrderHistory"
         android:name="id.ac.ibda.uas_pads.CL_OrderHistory"
         android:label="fragment_c_l_order_history"
-        tools:layout="@layout/fragment_c_l_order_history" >
+        tools:layout="@layout/fragment_c_l_order_history">
         <action
             android:id="@+id/action_CL_OrderHistory_to_orders"
             app:destination="@id/orders" />
@@ -77,4 +81,6 @@
             android:id="@+id/action_CL_OrderHistory_to_inventory"
             app:destination="@id/inventory" />
     </fragment>
+
+
 </navigation>

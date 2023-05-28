@@ -5,9 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.navigation.fragment.findNavController
 import id.ac.ibda.uas_pads.databinding.FragmentCustomersListBinding
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+
+
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -41,18 +45,25 @@ class CustomersList : Fragment() {
             findNavController().navigate(R.id.inventory)
         }
 
-        binding.salesperson1.setOnClickListener {
-            // hang on
-        }
+        binding.salesperson1.setOnClickListener(
+            Navigation.createNavigateOnClickListener(R.id.action_customersList_to_CL_Customers,
+                Bundle().apply { putInt("salesPersonId", 1) }
+            )
+        )
 
-        binding.salesperson2.setOnClickListener {
-            // hang on
-        }
+        binding.salesperson2.setOnClickListener(
+            Navigation.createNavigateOnClickListener(R.id.action_customersList_to_CL_Customers,
+                Bundle().apply { putInt("salesPersonId", 2) }
+            )
+        )
 
-        binding.salesperson3.setOnClickListener {
-            // hang on
-        }
+        binding.salesperson3.setOnClickListener(
+            Navigation.createNavigateOnClickListener(R.id.action_customersList_to_CL_Customers,
+                Bundle().apply { putInt("salesPersonId", 3) }
+            )
+        )
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

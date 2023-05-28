@@ -1,5 +1,6 @@
 package id.ac.ibda.uas_pads
 
+import MyClass
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import id.ac.ibda.uas_pads.databinding.FragmentCLCustomersBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,9 +53,44 @@ class CL_Customers : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_c_l_customers, container, false)
+        binding = FragmentCLCustomersBinding.inflate(inflater, container, false)
+        return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val salesPersonId = arguments?.getInt("salesPersonId")
+
+        // Fetch salesperson data and update inventoryTextViewCL
+        GlobalScope.launch(Dispatchers.Main) {
+            val salesPersons = try {
+                val myClass = MyClass()
+                myClass.getSalesPersons()
+            } catch (e: Exception) {
+                emptyList()
+            }
+
+            if (salesPersons.isNotEmpty() && salesPersonId != null) {
+                val salesPerson = salesPersons.find { it.sales_p_id == salesPersonId }
+                val salesPersonText = "${salesPerson?.sales_name} - ${salesPerson?.sales_p_id}"
+                binding.inventoryTextViewCL.text = salesPersonText
+            }
+        }
+
+        binding.orderBtn.setOnClickListener {
+            findNavController().navigate(R.id.orders)
+        }
+
+        binding.customerBtn.setOnClickListener {
+            findNavController().navigate(R.id.customersList)
+        }
+
+        binding.inventoryBtn.setOnClickListener {
+            findNavController().navigate(R.id.inventory)
+        }
+    }
+
 
     companion object {
         /**
