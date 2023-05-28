@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -14,10 +13,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [CustomersList.newInstance] factory method to
+ * Use the [CL_Customers.newInstance] factory method to
  * create an instance of this fragment.
  */
-class CustomersList : Fragment() {
+class CL_Customers : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -28,25 +27,6 @@ class CustomersList : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-        view?.findViewById<Button>(R.id.customerBtn)?.setOnClickListener {
-            // hang on
-        }
-
-        view?.findViewById<Button>(R.id.inventoryBtn)?.setOnClickListener {
-            // hang on
-        }
-
-        view?.findViewById<Button>(R.id.salesperson1)?.setOnClickListener {
-            // hang on
-        }
-
-        view?.findViewById<Button>(R.id.salesperson2)?.setOnClickListener {
-            // hang on
-        }
-
-        view?.findViewById<Button>(R.id.salesperson3)?.setOnClickListener {
-            // hang on
-        }
     }
 
     override fun onCreateView(
@@ -54,7 +34,7 @@ class CustomersList : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_customers_list, container, false)
+        return inflater.inflate(R.layout.fragment_c_l_customers, container, false)
     }
 
     companion object {
@@ -64,12 +44,12 @@ class CustomersList : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment CustomersList.
+         * @return A new instance of fragment CL_Customers.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            CustomersList().apply {
+            CL_Customers().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
